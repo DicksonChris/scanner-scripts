@@ -1,3 +1,28 @@
+<#
+.DESCRIPTION
+This script scans an image using a connected scanner and saves it to a file.
+
+.PARAMETER o
+The output file path to save the scanned image. If not specified, the default file path is used.
+
+.EXAMPLE
+.\scan.ps1 -o "C:\Users\chris\Desktop\new_scan.jpg"
+Scans an image using a connected scanner and saves it to "C:\Users\chris\Desktop\new_scan.jpg".
+
+.EXAMPLE
+.\scan.ps1
+Scans an image using a connected scanner and saves it to the default file path, "C:\Users\chris\Desktop\scrub\scan.jpg".
+
+.NOTES
+This script requires the WIA .NET library to be installed on the system.
+#>
+
+param(
+    [string]$o = "C:\Users\chris\Desktop\scrub\scan.jpg"
+)
+
+$outputFilePath = $o
+
 # Load the WIA .NET library
 [void][reflection.assembly]::LoadWithPartialName("WIA")
 
@@ -15,9 +40,6 @@ if ($null -eq $deviceInfo) {
 }
 
 $device = $deviceInfo.Connect()
-
-# Define the output file path
-$outputFilePath = "C:\Users\chris\Desktop\scrub\scan.jpg"
 
 # Start the scan and save the image to the output file
 $item = $device.Items[1]
